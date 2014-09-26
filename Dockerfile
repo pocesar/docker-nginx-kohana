@@ -1,12 +1,12 @@
 FROM ubuntu:trusty
 
-RUN apt-get update && apt-get dist-upgrade -y --no-install-recommends && apt-get -y install software-properties-common --force-yes
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update && apt-get dist-upgrade -y && apt-get -y install software-properties-common --force-yes
 
 RUN locale-gen pt_BR.UTF-8
 ENV LANG       pt_BR.UTF-8
 ENV LC_ALL     pt_BR.UTF-8
-
-ENV DEBIAN_FRONTEND noninteractive
 
 RUN add-apt-repository -y ppa:nginx/stable
 RUN add-apt-repository -y ppa:ondrej/php5
@@ -45,7 +45,7 @@ RUN sed -i -r -e 's/;?error_log.*/error_log = \/var\/log\/php5\/error.log/' /etc
 RUN sed -i -r -e 's/;?error_log.*/error_log = \/var\/log\/php5\/error-fpm.log/' /etc/php5/fpm/php-fpm.conf
 RUN sed -i -r -e 's/;?cgi\.fix_pathinfo.*/cgi.fix_pathinfo = 0/' /etc/php5/fpm/php.ini
 
-VOLUME ['/srv/www','/var/log/nginx','/var/log/php5']
+VOLUME ['/srv/www', '/var/log/nginx', '/var/log/php5', '/etc/php5', '/etc/nginx']
 EXPOSE 80 443
 
 CMD ["/start.sh"]
