@@ -28,10 +28,7 @@ ADD nginx.conf /etc/nginx/nginx.conf
 ENV NGINX_SSL_CERT "NULL"
 ENV NGINX_SSL_KEY  "NULL"
 
-RUN chown -R www-data:www-data /var/lib/nginx
-RUN chown -R www-data:www-data /var/lib/php5
-RUN chown -R www-data:www-data /var/run/php5-fpm
-RUN chown -R www-data:www-data /srv/www
+RUN chown -R www-data:www-data /var/lib/nginx /var/lib/php5 /var/run/php5-fpm /srv/www
 
 ADD start.sh /start.sh
 
@@ -45,7 +42,7 @@ RUN sed -i -r -e 's/;?error_log.*/error_log = \/var\/log\/php5\/error.log/' /etc
 RUN sed -i -r -e 's/;?error_log.*/error_log = \/var\/log\/php5\/error-fpm.log/' /etc/php5/fpm/php-fpm.conf
 RUN sed -i -r -e 's/;?cgi\.fix_pathinfo.*/cgi.fix_pathinfo = 0/' /etc/php5/fpm/php.ini
 
-VOLUME ['/srv/www', '/var/log/nginx', '/var/log/php5', '/etc/php5', '/etc/nginx']
+VOLUME ["/srv/www", "/var/log/nginx", "/var/log/php5", "/etc/php5", "/etc/nginx"]
 EXPOSE 80 443
 
 CMD ["/start.sh"]
