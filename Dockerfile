@@ -42,7 +42,7 @@ RUN sed -i -r -e 's/;?error_log.*/error_log = \/var\/log\/php5\/error.log/' /etc
 RUN sed -i -r -e 's/;?error_log.*/error_log = \/var\/log\/php5\/error-fpm.log/' /etc/php5/fpm/php-fpm.conf
 RUN sed -i -r -e 's/;?cgi\.fix_pathinfo.*/cgi.fix_pathinfo = 0/' /etc/php5/fpm/php.ini
 
-VOLUME ["/srv/www", "/var/log/", "/etc/"]
+VOLUME ["/srv/www", "/var/log", "/etc/php5", "/etc/nginx"]
 EXPOSE 80 443
 
 CMD ["/start.sh"]
